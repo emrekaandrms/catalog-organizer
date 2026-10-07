@@ -455,6 +455,7 @@ def test_metal_and_gem_get_different_environments():
     assert metal_tex is not gem_tex
 
 
+@pytest.mark.gpu
 def test_render_version_is_in_the_cache_filename(tmp_path):
     """Cached PNGs from a previous lighting pipeline must not be served next to
     new ones — the version prefix is what prevents that.
@@ -654,6 +655,7 @@ def test_bore_avoidance_does_not_fire_on_a_solid_piece():
     assert np.allclose(front, [0, 0, 1])
 
 
+@pytest.mark.gpu
 def test_render_product_arms_bore_avoidance_only_without_gems(qapp, tmp_path):
     """The wiring in render_product: avoid_bore is tied to gem_arrays being
     None, not to a separate flag a caller could forget to set."""
@@ -671,6 +673,7 @@ def test_render_product_arms_bore_avoidance_only_without_gems(qapp, tmp_path):
 
 # ---------------------------------------------------------------- kamera override
 
+@pytest.mark.gpu
 def test_render_product_camera_override_changes_direction(qapp, tmp_path):
     """A hand-set angle from the orbit dialog must actually change the picture,
     not just be silently accepted."""
@@ -688,6 +691,7 @@ def test_render_product_camera_override_changes_direction(qapp, tmp_path):
     assert custom.views["front"].exists()
 
 
+@pytest.mark.gpu
 def test_render_product_camera_override_leaves_other_view_automatic(qapp, tmp_path):
     from catalog_organizer.render.product_render import render_product
 
@@ -703,6 +707,7 @@ def test_render_product_camera_override_leaves_other_view_automatic(qapp, tmp_pa
         "front icin ozel aci, iso'ya sizmamali")
 
 
+@pytest.mark.gpu
 def test_render_product_ignores_override_for_unknown_view(qapp, tmp_path):
     from catalog_organizer.render.product_render import render_product
 
@@ -714,6 +719,7 @@ def test_render_product_ignores_override_for_unknown_view(qapp, tmp_path):
     assert set(result.views) == {"front", "iso"}
 
 
+@pytest.mark.gpu
 def test_repeated_override_reuses_its_own_cache_slot(qapp, tmp_path):
     """Same override, second call: must hit the cache, not re-render."""
     from catalog_organizer.render.product_render import render_product

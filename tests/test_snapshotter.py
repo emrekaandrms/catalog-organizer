@@ -26,6 +26,7 @@ def isolated_cache(tmp_path: Path, monkeypatch):
     return tmp_path
 
 
+@pytest.mark.gpu
 def test_snapshot_stl_produces_4_pngs_and_thumbnail(isolated_cache: Path):
     results = stl_mod.snapshot_stl(
         FIXTURES / "sample_ring.stl",
@@ -43,6 +44,7 @@ def test_snapshot_stl_produces_4_pngs_and_thumbnail(isolated_cache: Path):
     assert thumb.suffix == ".webp"
 
 
+@pytest.mark.gpu
 def test_snapshot_images_are_not_blank(isolated_cache: Path):
     results = stl_mod.snapshot_stl(
         FIXTURES / "sample_ring.stl",

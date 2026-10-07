@@ -24,6 +24,7 @@ def isolated_cache(tmp_path: Path, monkeypatch):
     return tmp_path
 
 
+@pytest.mark.gpu
 def test_snapshot_3dm_produces_4_pngs_and_thumbnail(isolated_cache: Path):
     results = threedm_mod.snapshot_3dm(
         FIXTURES / "sample_ring.3dm",
@@ -37,6 +38,7 @@ def test_snapshot_3dm_produces_4_pngs_and_thumbnail(isolated_cache: Path):
     assert results["thumbnail"].suffix == ".webp"
 
 
+@pytest.mark.gpu
 def test_snapshot_3dm_render_not_blank(isolated_cache: Path):
     results = threedm_mod.snapshot_3dm(
         FIXTURES / "sample_pendant.3dm",

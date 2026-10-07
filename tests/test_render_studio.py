@@ -100,6 +100,7 @@ def test_the_rig_lights_the_camera_axis():
 
 # ---------------------------------------------------------------- tone mapping
 
+@pytest.mark.gpu
 def test_tone_mapping_is_actually_installed_on_the_renderer():
     """The whole fault in one assertion: the pipeline had no tone mapping pass
     at all, so every reflected value above 1.0 clipped flat to white."""
@@ -114,6 +115,7 @@ def test_tone_mapping_is_actually_installed_on_the_renderer():
     plotter.close()
 
 
+@pytest.mark.gpu
 def test_tone_mapping_wraps_an_existing_pass_rather_than_dropping_it():
     """SSAO and friends install their own pass. Tone mapping has to sit
     outside whatever is already there, not replace it."""
@@ -127,6 +129,7 @@ def test_tone_mapping_wraps_an_existing_pass_rather_than_dropping_it():
     plotter.close()
 
 
+@pytest.mark.gpu
 def test_environment_is_oriented_from_the_placed_camera():
     """Without this the lighting depends on how the piece happened to be
     oriented in CAD, so two rings off the same tray photograph differently."""
@@ -572,6 +575,7 @@ def _gold_sphere_luminance() -> np.ndarray:
     return rgba[obj][:, :3].astype(float) @ LUMA
 
 
+@pytest.mark.gpu
 def test_polished_gold_shows_reflection_structure():
     """The end-to-end guard on the whole fault. A mirror ball under a rig with
     dark areas has a wide luminance spread; under a uniform lightbox it
@@ -582,6 +586,7 @@ def test_polished_gold_shows_reflection_structure():
     assert spread > 60, f"metal is flat: p90-p10 = {spread:.1f}"
 
 
+@pytest.mark.gpu
 def test_polished_gold_is_not_blown_out():
     """The other half: with no tone mapping the reflected rig clipped, and a
     large share of the metal became pure white with no colour left in it."""

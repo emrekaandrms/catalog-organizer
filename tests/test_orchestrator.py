@@ -111,6 +111,7 @@ def _make_deps() -> PipelineDeps:
     )
 
 
+@pytest.mark.gpu
 def test_process_one_stl_end_to_end(isolated_cache: Path):
     allocator = IdAllocator(isolated_cache / "next_id.txt")
     manifest = scan(
@@ -148,6 +149,7 @@ def _stl_ring_entry(isolated_cache: Path):
     )
 
 
+@pytest.mark.gpu
 def test_sellability_sellable_when_design_complete_and_confident(isolated_cache: Path):
     deps = _make_deps()
     deps.vlm_client = _DesignVLM(design_complete=True, confidence=0.95)
@@ -157,6 +159,7 @@ def test_sellability_sellable_when_design_complete_and_confident(isolated_cache:
     assert record.sellability_reason is None
 
 
+@pytest.mark.gpu
 def test_sellability_not_sellable_when_design_incomplete(isolated_cache: Path):
     """Regression target for the scale/sales design notes §2: a design the
     VLM confidently judges incomplete (e.g. a sprue stub, a missing stone
@@ -169,6 +172,7 @@ def test_sellability_not_sellable_when_design_incomplete(isolated_cache: Path):
     assert record.sellability_reason == "design_incomplete"
 
 
+@pytest.mark.gpu
 def test_sellability_needs_review_when_design_complete_confidence_low(isolated_cache: Path):
     """Low design_complete_confidence must route to needs_review regardless
     of which way the boolean leans — don't trust an unconfident verdict
@@ -180,6 +184,7 @@ def test_sellability_needs_review_when_design_complete_confidence_low(isolated_c
     assert record.sellability_reason == "design_complete_uncertain"
 
 
+@pytest.mark.gpu
 def test_sellability_ignores_brand_entirely(isolated_cache: Path):
     """the scale/sales design notes §2.1: this is a professional design
     workshop drawing commissioned/brand-referenced pieces as a paid
@@ -198,6 +203,7 @@ def test_sellability_ignores_brand_entirely(isolated_cache: Path):
     assert record.sellability == "sellable"
 
 
+@pytest.mark.gpu
 def test_batch_runner_processes_all_fixtures(isolated_cache: Path):
     allocator = IdAllocator(isolated_cache / "next_id.txt")
     manifest = scan(
@@ -233,6 +239,7 @@ def test_batch_runner_processes_all_fixtures(isolated_cache: Path):
     assert progress_events[-1] == (5, 5)
 
 
+@pytest.mark.gpu
 def test_resume_skips_already_finished(isolated_cache: Path):
     allocator = IdAllocator(isolated_cache / "next_id.txt")
     manifest = scan(

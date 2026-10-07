@@ -94,6 +94,7 @@ def isolated_cache(tmp_path, monkeypatch):
 
 # ── Tests ────────────────────────────────────────────────────────────────────
 
+@pytest.mark.gpu
 def test_batch_runner_parallel_workers_processes_all(isolated_cache):
     """5 fixtures + parallel_workers=2: all 5 records present, no losses."""
     allocator = IdAllocator(isolated_cache / "next_id.txt")
@@ -121,6 +122,7 @@ def test_batch_runner_parallel_workers_processes_all(isolated_cache):
     assert {r.file_id for r in records} == {e.file_id for e in entries}
 
 
+@pytest.mark.gpu
 def test_batch_runner_parallel_writer_lock_serialises_writes(isolated_cache, monkeypatch):
     """3 workers × 5 fixtures: writer.append must never be called concurrently."""
     allocator = IdAllocator(isolated_cache / "next_id.txt")
@@ -162,6 +164,7 @@ def test_batch_runner_parallel_writer_lock_serialises_writes(isolated_cache, mon
     )
 
 
+@pytest.mark.gpu
 def test_batch_runner_parallel_cancel_drains_cleanly(isolated_cache):
     """Cancel after first record completes; remaining workers exit cleanly.
 
@@ -205,6 +208,7 @@ def test_batch_runner_parallel_cancel_drains_cleanly(isolated_cache):
     assert all(r.state in ("final", "needs_review", "failed") for r in records)
 
 
+@pytest.mark.gpu
 def test_batch_runner_parallel_workers_one_works(isolated_cache):
     """parallel_workers=1 still produces all 5 records (sequential legacy path)."""
     allocator = IdAllocator(isolated_cache / "next_id.txt")
