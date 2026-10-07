@@ -7,13 +7,18 @@ import pytest
 
 # The render engine is the web viewer in an embedded Chromium. Qt wants that announced before the
 # first QApplication exists (pytest-qt creates it lazily), exactly as app.py does at startup.
-try:
-    from PyQt6.QtCore import QCoreApplication, Qt
+import os as _os
 
-    QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
-    import PyQt6.QtWebEngineWidgets  # noqa: F401
-except ImportError:                       # no PyQt6-WebEngine: the engine tests skip themselves
-    pass
+# On a machine without a GPU (CI) Chromium's GPU process cannot start and takes the whole interpreter
+# down with it, so there the module is not even imported: no test needs it (see `gpu` below).
+if _os.environ.get("CATALOG_ORGANIZER_NO_GPU") != "1":
+    try:
+        from PyQt6.QtCore import QCoreApplication, Qt
+
+        QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
+        import PyQt6.QtWebEngineWidgets  # noqa: F401
+    except ImportError:                   # no PyQt6-WebEngine: the engine tests skip themselves
+        pass
 
 from catalog_organizer.core.schemas import (
     CatalogRecord,
