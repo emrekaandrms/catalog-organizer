@@ -9,6 +9,7 @@ jobs:
   test:
     runs-on: windows-latest
     env:
+      PYTHONUNBUFFERED: "1"
       QT_QPA_PLATFORM: offscreen
       CATALOG_ORGANIZER_NO_GPU: "1"      # hosted runners have no GPU: skip the tests that draw in Chromium
     steps:
@@ -23,4 +24,4 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
       - name: Test
-        run: pytest --no-qt-log -v -s -p no:cacheprovider tests/test_gui.py
+        run: pytest -v -p no:cacheprovider
