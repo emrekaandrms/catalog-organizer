@@ -152,6 +152,8 @@ def _run_gui() -> None:
     window = MainWindow()
     window.show()
     code = app.exec()
+    from catalog_organizer.gui.panels.settings import wait_for_probes  # noqa: PLC0415
+    wait_for_probes()
     if web_engine:
         service.uninstall()          # stops the loopback server before Qt tears Chromium down
     sys.exit(code)

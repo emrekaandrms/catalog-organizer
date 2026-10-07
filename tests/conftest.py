@@ -150,3 +150,17 @@ def _no_chromium_without_gpu(monkeypatch):
         raise AssertionError("this test would start the embedded Chromium; mark it @pytest.mark.gpu")
 
     monkeypatch.setattr(service.WebRenderService, "_ensure_view", refuse)
+
+
+@pytest.fixture(autouse=True)
+def _no_ollama_network(monkeypatch, request):
+    """Tests do not talk to a real Ollama (and must not depend on whether one is running on the machine
+    that runs them): the model list is empty and instant unless a test supplies its own. The module
+    that tests the real function (with its own HTTP stub) is left alone."""
+    if request.module.__name__.endswith("test_ollama_models"):
+        return
+    try:
+        from catalog_organizer.vlm import ollama_models
+    except ImportError:
+        return
+    monkeypatch.setattr(ollama_models, "list_ollama_models", lambda host, port, timeout_s=5.0: [])

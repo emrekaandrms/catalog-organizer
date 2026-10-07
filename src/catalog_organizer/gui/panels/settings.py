@@ -165,6 +165,26 @@ class _OllamaProbeWorker(QThread):
             self.done.emit(None, f"Unexpected error: {exc}")
 
 
+# A probe can outlive the form that started it: close Settings (or quit) while Ollama is slow to
+# answer and the form is destroyed with its thread still waiting on the socket. Qt treats "QThread
+# destroyed while the thread is still running" as fatal and takes the whole process down; a machine
+# where nothing listens on Ollama's port answers slowly enough to hit it every time. So the thread is
+# NOT a child of the form: it is kept here until it has really finished, and the app waits for the
+# stragglers on the way out.
+_LIVE_PROBES: set = set()
+
+
+def _reap_probe(worker: "_OllamaProbeWorker") -> None:
+    worker.wait()
+    _LIVE_PROBES.discard(worker)
+
+
+def wait_for_probes(timeout_ms: int = 6000) -> None:
+    """Block (briefly) until every Ollama probe still in flight has finished."""
+    for worker in list(_LIVE_PROBES):
+        worker.wait(timeout_ms)
+
+
 class _OllamaForm(QWidget):
     """Per-provider sub-form for local/remote Ollama.
 
@@ -257,11 +277,12 @@ class _OllamaForm(QWidget):
             return
         self._set_status("Connecting to Ollama…", "#9e9e9e")
         self._refresh_btn.setEnabled(False)
-        self._worker = _OllamaProbeWorker(
-            self._host.text().strip() or "127.0.0.1", self._port.value(), parent=self,
-        )
-        self._worker.done.connect(self._on_models)
-        self._worker.start()
+        worker = _OllamaProbeWorker(self._host.text().strip() or "127.0.0.1", self._port.value())
+        self._worker = worker
+        _LIVE_PROBES.add(worker)
+        worker.finished.connect(lambda w=worker: _reap_probe(w), Qt.ConnectionType.QueuedConnection)
+        worker.done.connect(self._on_models)
+        worker.start()
 
     def _on_models(self, models, error: str) -> None:
         self._refresh_btn.setEnabled(True)
