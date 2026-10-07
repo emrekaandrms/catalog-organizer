@@ -122,3 +122,26 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "gpu" in item.keywords:
             item.add_marker(skip)
+
+
+@pytest.fixture(autouse=True)
+def _no_chromium_without_gpu(monkeypatch):
+    """With CATALOG_ORGANIZER_NO_GPU=1 (CI runners) no test may start the embedded Chromium: on a
+    machine without a GPU it takes the whole interpreter down. The Render tab then shows its
+    "PyQt6-WebEngine needed" label instead of a player, and a test that tries anyway fails loudly
+    here, on every machine, instead of crashing only on CI."""
+    import os
+
+    if os.environ.get("CATALOG_ORGANIZER_NO_GPU") != "1":
+        return
+    try:
+        from catalog_organizer.gui.panels import render_panel
+        from catalog_organizer.webview import service
+    except ImportError:
+        return
+    monkeypatch.setattr(render_panel, "_create_player", lambda parent: None)
+
+    def refuse(*args, **kwargs):
+        raise AssertionError("this test would start the embedded Chromium; mark it @pytest.mark.gpu")
+
+    monkeypatch.setattr(service.WebRenderService, "_ensure_view", refuse)
