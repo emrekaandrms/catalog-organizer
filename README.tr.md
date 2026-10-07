@@ -5,6 +5,7 @@ Arşivi tarar, her parçayı ölçer, görüntü modeliyle sınıflandırır, fi
 ilanlarını yazar ve canlı bir 3D görüntüleyicide gösterir. Aynı görüntüleyici PDF kataloğunun
 resimlerini de çizer.
 
+[![CI](https://github.com/emrekaandrms/catalog-organizer/actions/workflows/ci.yml/badge.svg)](https://github.com/emrekaandrms/catalog-organizer/actions/workflows/ci.yml)
 [![Lisans: GPL v3+](https://img.shields.io/badge/lisans-GPL--3.0--or--later-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)

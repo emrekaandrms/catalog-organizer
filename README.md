@@ -5,6 +5,7 @@ Scan an archive, measure every piece, classify it with a vision model, price it,
 Etsy / WooCommerce listings, and look at it in a live 3D viewer that also draws the images of your
 PDF catalogue.
 
+[![CI](https://github.com/emrekaandrms/catalog-organizer/actions/workflows/ci.yml/badge.svg)](https://github.com/emrekaandrms/catalog-organizer/actions/workflows/ci.yml)
 [![License: GPL v3+](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)
@@ -122,8 +123,9 @@ set CATALOG_ORGANIZER_NO_GPU=1  # skip the tests that draw in the embedded Chrom
 pytest
 ```
 
-Tests that need private CAD files skip themselves when the files are absent. See
-[CONTRIBUTING.md](CONTRIBUTING.md).
+Tests that need private CAD files skip themselves when the files are absent. CI runs on a GitHub-hosted
+Windows machine with no GPU, so the tests that draw (embedded Chromium, VTK) are skipped there and run on
+your machine. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Honest limits
 
