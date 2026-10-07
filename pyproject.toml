@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "catalog-organizer"
+version = "0.1.0"
+description = "Local-first catalogue tool for jewellery CAD files (.3dm / .stl): analysis, weights, stones, classification, listings, a live 3D render engine and PDF catalogues."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "GPL-3.0-or-later" }
+authors = [{ name = "Catalog Organizer contributors" }]
+keywords = ["jewellery", "cad", "3dm", "stl", "catalogue", "rendering", "three.js", "pyqt6"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Manufacturing",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Graphics :: 3D Rendering",
+]
+dependencies = [
+    # GUI. PyQt6 is GPL v3 / commercial: that is why this project is GPL-3.0-or-later.
+    "PyQt6>=6.7.0,<6.8",
+    # the render engine: the web viewer (three.js, bundled) in the app's own Chromium
+    "PyQt6-WebEngine>=6.7.0,<6.8",
+    # geometry
+    "trimesh>=4.4.0,<4.6",
+    "manifold3d>=2.5.0,<4",
+    "rhino3dm>=8.9.0,<8.18",
+    "fast-simplification>=0.1.7",
+    "shapely>=2.0,<3.0",
+    "networkx>=3.0,<4.0",
+    "rtree>=1.0,<2.0",
+    "scipy>=1.13.0,<1.15",
+    "numpy>=1.26.0,<2.1",
+    # the fallback (VTK) renderer and the catalogue's snapshot images
+    "pyvista>=0.43.0,<0.45",
+    "vtk>=9.3.0,<9.4",
+    # data and config
+    "pydantic>=2.7.0,<3.0",
+    "orjson>=3.10.0,<4.0",
+    "polars>=1.0.0,<2.0",
+    "PyYAML>=6.0.1,<7.0",
+    "Pillow>=10.3.0,<11.0",
+    "requests>=2.31.0,<3.0",
+    "keyring>=24.3.0,<26.0",
+    "structlog>=24.1.0,<26.0",
+    "typer>=0.12.0,<0.13",
+]
+
+[project.optional-dependencies]
+# Exact boolean volumes through your own LICENSED Rhino (5-8) installation, for stone-seat cutter
+# measurement. Without it the app falls back to a documented heuristic.
+rhino = [
+    "rhinoinside>=0.8.0,<0.9",
+    "pythonnet>=3.0.0,<4.0",
+]
+dev = [
+    "pytest>=8.2",
+    "pytest-qt>=4.4",
+    "hypothesis>=6.100",
+]
+
+[project.scripts]
+catalog-organizer = "catalog_organizer.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"catalog_organizer.webview" = ["assets/*", "assets/vendor/three/*", "assets/vendor/three/addons/*/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+qt_api = "pyqt6"
+markers = [
+    "gpu: needs a GPU with WebGL2 (the render engine draws in an embedded Chromium); skipped when CATALOG_ORGANIZER_NO_GPU=1",
+]

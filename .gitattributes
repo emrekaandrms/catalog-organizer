@@ -1,0 +1,13 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.stl binary
+*.3dm binary
+*.png binary
+*.ico binary
+*.hdr binary
+src/catalog_organizer/webview/assets/vendor/** linguist-vendored

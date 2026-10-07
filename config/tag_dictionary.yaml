@@ -1,0 +1,106 @@
+tags:
+  # Form / structure
+  - ring
+  - earring
+  - bracelet
+  - necklace
+  - pendant
+  - brooch
+  - chain
+  - charm
+  - band
+  - pair
+  - single_piece
+  - closed_form
+  - open_form
+  - link_structure
+  - chain_structure
+  - drop_structure
+  - round_form
+  - geometric
+
+  # Stone presence
+  - stone
+  - no_stone
+  - center_stone
+  - side_stones
+  - pave
+  - channel_set
+  - prong_set
+  - bezel_set
+  - invisible_set
+
+  # Surface / finish
+  - polished
+  - matte
+  - brushed
+  - hammered
+  - engraved
+  - milgrain
+  - filigree
+  - textured
+
+  # Construction
+  - hollow
+  - solid
+  - hinged
+  - articulated
+  - stackable
+  - adjustable
+
+  # Style descriptors
+  - solitaire
+  - halo
+  - three_stone
+  - cluster
+  - eternity
+  - bypass
+  - tension
+  - signet
+  - floral
+  - geometric_motif
+  - animal_motif
+  - cross_motif
+  - heart_motif
+  - religious_figure_motif  # any saint/religious figure; the SPECIFIC name
+                            # (Guadalupe, San Judas, Santa Barbara, ...)
+                            # goes in rich_description, not here — see
+                            # the catalogue-search design notes §9.3
+
+  # Structural details
+  - bail_present
+  - pin_back
+  - earring_post
+  - lever_back
+  - hoop_structure
+  - bangle_form
+  - cuff_form
+  - locket
+
+  # Production
+  - with_sprue
+  - casting_ready
+  - polished_model
+
+  # Target
+  - unisex
+  - womens
+  - mens
+  - childrens
+
+  # Fallback / generic
+  - single_piece
+
+# §C.4 deterministic fallback per main_category (used when VLM returns <5 valid tags)
+fallback_tags:
+  ring:     [ring, band, closed_form, polished, round_form]
+  earring:  [earring, pair, drop_structure, closed_form, polished]
+  bracelet: [bracelet, link_structure, closed_form, polished, round_form]
+  necklace: [necklace, chain_structure, closed_form, polished, single_piece]
+  pendant:  [pendant, closed_form, polished, single_piece, geometric]
+  chain:    [chain, chain_structure, link_structure, closed_form, single_piece]
+  charm:    [charm, single_piece, closed_form, polished, geometric]
+  brooch:   [brooch, single_piece, closed_form, polished, geometric]
+  unknown:  [single_piece, closed_form, polished, geometric, unisex]
+  jewelry_set: [closed_form, polished, geometric, single_piece, pair]
+  wedding_band: [ring, band, closed_form, polished, round_form]

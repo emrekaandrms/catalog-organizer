@@ -1,0 +1,112 @@
+categories:
+  ring:
+    subcategories:
+      - solitaire
+      - halo
+      - three_stone
+      - eternity
+      - band
+      - cocktail
+      - cluster
+      - bypass
+      - tension
+      - signet
+      - stackable
+      - other
+
+  earring:
+    subcategories:
+      - stud
+      - hoop
+      - drop
+      - chandelier
+      - huggie
+      - threader
+      - ear_cuff
+      - jacket
+      - other
+
+  bracelet:
+    subcategories:
+      - bangle
+      - cuff
+      - chain
+      - tennis
+      - charm_bracelet
+      - link
+      - wrap
+      - other
+
+  necklace:
+    subcategories:
+      - pendant_necklace
+      - collar
+      - choker
+      - opera
+      - lariat
+      - bib
+      - other
+
+  pendant:
+    subcategories:
+      - solitaire_pendant
+      - halo_pendant
+      - cross
+      - heart
+      - initial
+      - locket
+      - charm_pendant
+      - other
+
+  brooch:
+    subcategories:
+      - floral
+      - animal
+      - geometric
+      - cameo
+      - bar
+      - other
+
+  jewelry_set:
+    subcategories:
+      - bridal_set
+      - parure
+      - demi_parure
+      - other
+
+  wedding_band:
+    subcategories:
+      - plain_band
+      - diamond_band
+      - eternity_band
+      - milgrain
+      - other
+
+  chain:
+    subcategories:
+      - cable
+      - curb
+      - figaro
+      - rope
+      - box
+      - snake
+      - wheat
+      - garibaldi
+      - gourmette
+      - mirrored_gourmette  # "aynalı gurmet" - two gourmette rows side by side
+      - cuban
+      - gemici  # "gemici zinciri" (sailor/mariner-style chain)
+      - chain_segment  # a cut piece/component of a chain, not a full chain
+      - other
+
+  charm:
+    subcategories:
+      - geometric_charm
+      - symbol_charm
+      - animal_charm
+      - initial_charm
+      - other
+
+  unknown:
+    subcategories:
+      - unknown

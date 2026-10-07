@@ -1,0 +1,38 @@
+# All values in g/cm³. Editable in Settings.
+#
+# Gold values split into yellow vs white because the alloying base differs
+# (white gold typically uses Pd/Ni, yellow uses Cu/Ag) and the density
+# difference is ~5-6% — large enough to mis-report weights by half a gram on
+# a small ring if you pick the wrong family.
+#
+# The "white" values below are calibrated to the user's workshop scale
+# (2026-05-19, 4-ring batch verified within ±0.5% across silver/10k/14k/18k):
+#   silver_925   1.79 g  on 171.7 mm³  →  10.40 g/cm³   ≈ 10.36 std
+#   gold_10k_w   1.89 g  on 171.7 mm³  →  11.01 g/cm³   (vs 11.57 yellow)
+#   gold_14k_w   2.16 g  on 171.7 mm³  →  12.56 g/cm³   (vs 13.07 yellow)
+#   gold_18k_w   2.52 g  on 171.7 mm³  →  14.66 g/cm³   (vs 15.58 yellow)
+metals:
+  silver_925:
+    display: "925 Silver"
+    density_g_cm3: 10.36
+  gold_10k_yellow:
+    display: "10K Yellow Gold"
+    density_g_cm3: 11.57
+  gold_10k_white:
+    display: "10K White Gold"
+    density_g_cm3: 11.01
+  gold_14k_yellow:
+    display: "14K Yellow Gold"
+    density_g_cm3: 13.07
+  gold_14k_white:
+    display: "14K White Gold"
+    density_g_cm3: 12.56
+  gold_18k_yellow:
+    display: "18K Yellow Gold"
+    density_g_cm3: 15.58
+  gold_18k_white:
+    display: "18K White Gold"
+    density_g_cm3: 14.66
+  platinum_950:
+    display: "Platinum 950"
+    density_g_cm3: 20.13

@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+.venv-*/
+venv/
+env/
+
+# Your data. NEVER commit these to a public repository: they are your catalogue and your files.
+/data/
+/cache/
+/output/
+*.db
+*.sqlite3
+catalog_master.jsonl
+audit_log.jsonl
+
+# Your CAD files and local samples (the tests skip themselves when they are absent)
+/samples/
+/test_files*/
+/test_case/
+*.3dm
+!tests/fixtures/*.3dm
+*.stl
+!tests/fixtures/*.stl
+!examples/demo_ring.stl
+*.rhl
+
+# Optional environment maps: rights-cleared HDRs only, and you may keep them local
+/assets/hdr/
+
+# Local settings and secrets
+.env
+.env.*
+*.local.yaml
+.claude/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

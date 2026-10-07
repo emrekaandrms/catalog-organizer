@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Katalog: 3D görünüm</title>
+<style>
+  :root { --ink:#23252b; --mute:#6b6f78; --card:#fff; --line:rgba(0,0,0,.09); --bg:#EAE8E2; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:28px 20px 60px; background:var(--bg); color:var(--ink);
+    font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  main { max-width:1100px; margin:0 auto; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .sub { color:var(--mute); margin:0 0 22px; }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--mute); margin:26px 0 10px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px; }
+  a.card { display:block; padding:12px 14px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; color:inherit; text-decoration:none; }
+  a.card:hover { border-color:var(--ink); }
+  .id { font-weight:650; }
+  .meta { color:var(--mute); font-size:12px; margin-top:4px; font-variant-numeric:tabular-nums; }
+  .note { color:#8a5a14; }
+  #empty { color:var(--mute); }
+</style>
+</head>
+<body>
+<main>
+  <h1>3D görünüm</h1>
+  <p class="sub" id="sub">Bir ürün seçin.</p>
+  <div id="list"></div>
+  <p id="empty" hidden>Dışa aktarılmış ürün yok.</p>
+</main>
+<script>
+fetch('data/products.json').then(r => r.json()).then(items => {
+  const list = document.getElementById('list');
+  document.getElementById('sub').textContent = items.length + ' ürün';
+  if (!items.length) { document.getElementById('empty').hidden = false; return; }
+  const groups = {};
+  for (const it of items) (groups[it.category || 'diğer'] ||= []).push(it);
+  for (const [cat, arr] of Object.entries(groups).sort()) {
+    const h = document.createElement('h2'); h.textContent = cat + ' (' + arr.length + ')'; list.appendChild(h);
+    const g = document.createElement('div'); g.className = 'grid'; list.appendChild(g);
+    for (const it of arr) {
+      const a = document.createElement('a'); a.className = 'card'; a.href = 'viewer.html?p=' + encodeURIComponent(it.file_id);
+      const mb = (it.bytes / 1e6).toFixed(1);
+      const notes = [];
+      if (it.decimated_from) notes.push('sadeleştirildi ' + Math.round(it.decimated_from / 1000) + ' bin → ' + Math.round(it.triangles / 1000) + ' bin');
+      a.innerHTML = '<div class="id">' + it.file_id + '</div>' +
+        '<div class="meta">' + (it.stones ? it.stones + ' taş' : 'taşsız') + ' · ' + Math.round(it.triangles / 1000) + ' bin üçgen · ' + mb + ' MB</div>' +
+        (notes.length ? '<div class="meta note">' + notes.join(' · ') + '</div>' : '');
+      g.appendChild(a);
+    }
+  }
+});
+</script>
+</body>
+</html>

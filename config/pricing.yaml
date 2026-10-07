@@ -1,0 +1,44 @@
+# Fiyat sabitleri. Ayarlar ekranından düzenlenir.
+#
+# Buradaki metal kurları (2.9 / 110 / 7000) GÜNCEL PİYASA DEĞERLERİ — birkaç
+# ay içinde eskir. Hesaplanan her fiyat satırı hangi değerlerle üretildiğinin
+# damgasını taşır (listing_variants.pricing_snapshot), böylece kur değişince
+# hangi ilanların bayat kaldığı sorgulanabilir.
+#
+# Formüller kullanıcı tarafından verildi (2026-09-09):
+#   Etsy  gümüş : (g × 1.2 × 1.3 × 2.9 + 20 + 5 + 5) × 2      → USD
+#   Woo   gümüş : g × 2.7 × 110                                → TL
+#   Woo   altın : g × milyem × 1.4 × 7000                      → TL
+#   Woo   STL   : 50 (sabit)                                   → TL
+
+etsy:
+  currency: USD
+  # Etsy'nin izin verdiği değerler: i_did | collective | someone_else.
+  # Atölyede çalışan varsa doğru değer "collective" — KULLANICIYA SORULACAK.
+  who_made: i_did
+  when_made: made_to_order
+  silver:
+    factor_a: 1.2
+    factor_b: 1.3
+    metal_rate: 2.9
+    additions: [20, 5, 5]
+    final_multiplier: 2
+
+woocommerce:
+  currency: TRY
+  silver:
+    factor: 2.7
+    metal_rate: 110
+  gold:
+    # Dört ayarın hepsinde AYNI gram kullanılır; ayar farkını yalnızca milyem
+    # kurar. Kullanıcı kararı: ayar başına yoğunluk hesabı yapılmayacak.
+    gram_source: gold_14k_yellow_g
+    markup: 1.4
+    pure_gold_gram_price: 7000
+    karats:
+      8: 0.333
+      10: 0.417
+      14: 0.585
+      18: 0.750
+  stl:
+    flat_price: 50

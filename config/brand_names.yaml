@@ -1,0 +1,17 @@
+# Brand name allow-list for VLM brand recognition (the catalogue-search design notes §1.2/§3).
+# No reference images are used (yet) — the VLM matches against its own general
+# training knowledge of each brand's signature design language. This is
+# explicitly the lower-confidence path; measure accuracy on a 20-30 file
+# sample before trusting it at catalog scale (plan §3).
+#
+# This is a STARTER list (only the brands mentioned so far). Add more names
+# below as needed — one per line, lowercase-with-underscores id is generated
+# from the display name automatically by the loader.
+#
+# The VLM is instructed to only claim a brand match on a clear, confident
+# design signature (e.g. Cartier Panthère, Van Cleef & Arpels Alhambra
+# clover) and to answer "unknown" otherwise — never guess to look certain.
+
+brands:
+  - Cartier
+  - Van Cleef & Arpels

@@ -1,0 +1,77 @@
+disk:
+  warn_free_gb: 50
+
+scale_thresholds:
+  bracelet:   {max_bbox_mm: 140, min_bbox_mm: 25}
+  brooch:     {max_bbox_mm: 120, min_bbox_mm: 10}
+  chain:      {max_bbox_mm: 800, min_bbox_mm: 25}
+  charm:      {max_bbox_mm: 60,  min_bbox_mm: 3}
+  earring:    {max_bbox_mm: 120, min_bbox_mm: 3}
+  necklace:   {max_bbox_mm: 600, min_bbox_mm: 25}
+  pendant:    {max_bbox_mm: 100, min_bbox_mm: 3}
+  ring:       {max_bbox_mm: 80,  max_inner_mm: 30, min_bbox_mm: 5, min_inner_mm: 10}
+
+snapshot:
+  resolution: 1024
+  thumbnail_size: 256
+
+# ── VLM provider configuration ────────────────────────────────────────────────
+# `provider` selects the active backend; only that backend's block below is
+# read at runtime. API keys for cloud providers (openai, minimax) live in the
+# OS credential manager (Settings → VLM Provider), never in this file.
+vlm:
+  provider: ollama
+  parallel_workers: 2
+  timeout_s: 300
+  temperature: 0.1
+
+  ollama:
+    host: 127.0.0.1
+    port: 11434
+    model: qwen3.5:9b-q4_K_M
+    num_ctx: 8192
+    keep_alive: "10m"
+
+  openai:
+    model: gpt-4o
+    base_url: https://api.openai.com/v1
+    max_output_tokens: 800
+    # org_id: ""    # only set if your OpenAI account uses a non-default org
+
+  minimax:
+    model: MiniMax-VL-01
+    base_url: https://api.minimaxi.com/v1
+    max_output_tokens: 800
+    # group_id: ""  # MiniMax sub-account, optional
+
+  glm:
+    model: glm-4.5v
+    # International endpoint. Mainland platform accounts should use
+    # https://open.bigmodel.cn/api/paas/v4 instead.
+    base_url: https://api.z.ai/api/paas/v4
+    max_output_tokens: 800
+    use_json_mode: true
+
+  # OpenCode Zen — one key fronting GPT / Claude / Gemini.
+  # Key: https://opencode.ai/auth
+  opencode:
+    model: claude-sonnet-5
+    base_url: https://opencode.ai/zen/v1
+    max_output_tokens: 800
+    use_json_mode: true
+
+  # Any endpoint speaking the OpenAI Chat Completions protocol —
+  # OpenRouter, DeepSeek, Together, a self-hosted vLLM, and so on.
+  # base_url has NO default on purpose: a half-configured selection must
+  # fail loudly rather than quietly sending images to OpenAI.
+  openai_compatible:
+    model: ""
+    base_url: ""
+    max_output_tokens: 800
+    # `response_format` is an OpenAI extension some gateways reject
+    # outright. Off by default; the parser tolerates prose anyway.
+    use_json_mode: false
+
+workers:
+  cad_snapshot_workers: 2
+  vlm_queue_depth: 10

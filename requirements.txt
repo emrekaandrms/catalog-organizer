@@ -1,0 +1,28 @@
+# Runtime dependencies, same list as pyproject.toml (`pip install -e .` is the supported way).
+# This file exists for people who prefer `pip install -r requirements.txt`.
+PyQt6>=6.7.0,<6.8
+PyQt6-WebEngine>=6.7.0,<6.8
+trimesh>=4.4.0,<4.6
+manifold3d>=2.5.0,<4
+rhino3dm>=8.9.0,<8.18
+fast-simplification>=0.1.7
+shapely>=2.0,<3.0
+networkx>=3.0,<4.0
+rtree>=1.0,<2.0
+scipy>=1.13.0,<1.15
+numpy>=1.26.0,<2.1
+pyvista>=0.43.0,<0.45
+vtk>=9.3.0,<9.4
+pydantic>=2.7.0,<3.0
+orjson>=3.10.0,<4.0
+polars>=1.0.0,<2.0
+PyYAML>=6.0.1,<7.0
+Pillow>=10.3.0,<11.0
+requests>=2.31.0,<3.0
+keyring>=24.3.0,<26.0
+structlog>=24.1.0,<26.0
+typer>=0.12.0,<0.13
+
+# Optional: exact boolean volumes through your own licensed Rhino. Install with `pip install -e ".[rhino]"`.
+# rhinoinside>=0.8.0,<0.9
+# pythonnet>=3.0.0,<4.0

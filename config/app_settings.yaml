@@ -1,0 +1,26 @@
+paths:
+  output_root: ""          # where exports are written (set it in Settings)
+  cache_root: ""        # empty = project_root/cache (default)
+  data_root: ""         # empty = project_root/data (default)
+
+theme:
+  mode: dark            # dark | light
+  accent_color: "#1e88e5"
+
+hotkeys:
+  panel_1: "Ctrl+1"
+  panel_2: "Ctrl+2"
+  panel_3: "Ctrl+3"
+  panel_4: "Ctrl+4"
+  panel_5: "Ctrl+5"
+  panel_6: "Ctrl+6"
+  panel_7: "Ctrl+7"
+  run_batch: "F5"
+  pause_batch: "F6"
+  cancel_batch: "Escape"
+  apply_correction: "Ctrl+S"
+  next_item: "J"
+  prev_item: "K"
+  reject_item: "R"
+  approve_item: "A"
+  open_settings: "Ctrl+,"

@@ -1,0 +1,10 @@
+# Shape factors relative to round brilliant for given longest dimension.
+# carat = round_table(short_side_mm) x shape_factor x (long/short)
+# Refined in D.14 after pilot data is available.
+shape_factors:
+  oval:      1.05
+  pear:      1.00
+  marquise:  0.95
+  princess:  1.20
+  emerald:   1.20
+  baguette:  1.10

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D görünüm</title>
+<style>
+  :root { --ink:#23252b; --mute:#6b6f78; --card:rgba(255,255,255,.82); --line:rgba(0,0,0,.08); }
+  html, body { margin:0; height:100%; overflow:hidden; color:var(--ink);
+    font:13px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:linear-gradient(#F6F6F4,#D9D9D7); }
+  #stage { position:fixed; inset:0; }
+  #stage canvas { display:block; width:100%; height:100%; touch-action:none; }
+  #ui { position:fixed; left:14px; top:14px; display:flex; flex-direction:column; gap:10px;
+    padding:12px 14px; background:var(--card); border:1px solid var(--line); border-radius:12px;
+    backdrop-filter:blur(8px); max-width:min(260px, calc(100vw - 28px)); }
+  #ui h1 { margin:0; font-size:13px; font-weight:650; letter-spacing:.01em; }
+  #ui .sub { color:var(--mute); font-size:11.5px; margin-top:-6px; }
+  .row { display:flex; flex-direction:column; gap:5px; }
+  .row > span { color:var(--mute); font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; padding:4px 9px; border-radius:999px;
+    border:1px solid var(--line); background:#fff; cursor:pointer; font:inherit; color:inherit; }
+  .chip[aria-pressed="true"] { border-color:#23252b; box-shadow:0 0 0 1px #23252b inset; }
+  .chip i { width:11px; height:11px; border-radius:50%; border:1px solid rgba(0,0,0,.2); }
+  label.tog { display:flex; gap:7px; align-items:center; cursor:pointer; color:var(--mute); }
+  #stat { color:var(--mute); font-variant-numeric:tabular-nums; font-size:11.5px; }
+  #err { position:fixed; left:14px; bottom:14px; right:14px; padding:10px 12px; border-radius:10px;
+    background:#fff3f0; border:1px solid #f0b8aa; color:#8a2a14; white-space:pre-wrap; display:none; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "./vendor/three/three.module.js",
+  "three/addons/": "./vendor/three/addons/" } }
+</script>
+</head>
+<body>
+<div id="stage"></div>
+<div id="ui" hidden>
+  <h1>3D görünüm</h1>
+  <a href="index.html" style="color:inherit;font-size:11.5px">&larr; galeri</a>
+  <div class="sub" id="sub"></div>
+  <div class="row"><span>Maden</span><div class="chips" id="metals"></div></div>
+  <div class="row"><span>Taş</span><div class="chips" id="stones"></div></div>
+  <label class="tog"><input type="checkbox" id="prog" checked> Aşamalı netleştirme (16 kare)</label>
+  <div id="stat"></div>
+</div>
+<div id="err"></div>
+<script type="module" src="viewer.js"></script>
+</body>
+</html>

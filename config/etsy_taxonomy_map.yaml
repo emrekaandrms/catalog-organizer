@@ -1,0 +1,30 @@
+# Bizim kategorilerimiz → Etsy sayısal taksonomi ID'leri.
+#
+# BU DOSYA BİLEREK BOŞ. Etsy'nin taksonomi ID'leri platform sabitleri ama
+# elimizde doğrulanmış bir liste yok, uydurulmuş bir ID ilanı yanlış
+# kategoriye sokar ya da API çağrısını reddettirir. Boş bırakıldığında
+# `listing/validate.py` her Etsy ilanını "taksonomi ID'si yok" diye
+# işaretler ve o ilan dışa aktarıma girmez — sessizce yanlış gitmesindense
+# gürültülü şekilde durması tercih edildi.
+#
+# NASIL DOLDURULUR
+# 1) Etsy Open API v3: GET /v3/application/seller-taxonomy/nodes
+#    (anahtar gerekmez) — takı dallarını bulup ID'leri buraya yazın.
+# 2) Ya da mağazanızda zaten yayında olan bir ilanı dışa aktarıp
+#    kullandığı taksonomi ID'sini kopyalayın.
+#
+# Arama sırası: önce `subcategory`, bulunamazsa `main_category`.
+# Yani alt kategoriye özel bir ID yazmazsanız ana kategorininki kullanılır.
+
+categories: {}
+
+# Örnek (gerçek ID'lerle değiştirin — aşağıdakiler UYDURMA DEĞİL, sadece
+# biçim gösteriyor, bu yüzden yorum içinde bırakıldı):
+#
+# categories:
+#   ring:      0     # Jewelry > Rings
+#   pendant:   0     # Jewelry > Necklaces > Pendants
+#   earring:   0     # Jewelry > Earrings
+#   bracelet:  0     # Jewelry > Bracelets
+#   necklace:  0     # Jewelry > Necklaces
+#   solitaire: 0     # alt kategori, ring'i ezer
